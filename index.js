@@ -1,17 +1,17 @@
-// Chordifykingdom v1.0 + Tran682025 Pi Login/Payment panel
-// Chuẩn hóa: Golden Turtle Edition (musickingdom), Pi SDK v2, pending-safe.
+// MusicPiChordify v1.0 + Tran682025 Pi Login/Payment panel
+// Golden Turtle Edition · Pi SDK v2 · pending-safe (không cố complete/cancel pending cũ).
 
-// === Backend URL cho Pi Payment (tùy chọn, đã bỏ khoảng trắng thừa) ===
+// === Backend URL cho Pi Payment (tùy chọn) ===
 const BACKEND_URL = "https://9bf7eba97a89.ngrok-free.app";
 
 // ====== I18N đơn giản VN / EN cho phần UI chính ======
 const I18N = {
   vn: {
-    bannerTitle: "PiChordify Kingdom · Tran682025",
+    bannerTitle: "MusicPiChordify · Pichordify Kingdom",
     bannerDescription:
       "Công cụ gợi ý hợp âm & luyện hát trong hệ sinh thái Pi – bản dành riêng cho thử nghiệm frontend, chạy trên domain Tran682025 cùng với Pi Login & Pi Payment (Testnet) để hoàn thành Checklist trên Pi App Platform.",
     bannerVersionLabel: "Tran682025 · Golden Turtle Edition",
-    bannerSubline: "FYKINGDOM v1.0 · Pi SDK SANDBOX",
+    bannerSubline: "MusicPiChordify v1.0 · Pi SDK SANDBOX",
     bannerSmall: "Testnet gateway for Pi apps",
     newSongTitle: "Bản nhạc mới (giao diện demo)",
     composerPill: "Composer panel",
@@ -35,10 +35,10 @@ const I18N = {
     videoRoomHint:
       "Kênh giao lưu học viên & giảng viên (bản DEV – placeholder).",
     devModeText:
-      "Đang chạy ở trạng thái: Chế độ DEV, thanh toán Pi chỉ chạy khi Pi SDK (client) & backend UP, Pi Payment mở trên app Pi và test (SANDBOX).",
+      'Đang chạy ở trạng thái: <strong>Chế độ DEV</strong>, thanh toán Pi chỉ chạy khi Pi SDK (client) &amp; backend UP, Pi Payment mở trên app Pi và test (SANDBOX).',
     piPanelTitle: "Pi Login & Pi Payment (Testnet)",
     piPanelSubtitle:
-      "Panel dùng để hoàn thành bước 10 Checklist trong Pi App Platform cho app Tran682025.",
+      "Panel dùng để hoàn thành bước 10 Checklist trong Pi App Platform cho app MusicPiChordify (Tran682025).",
     sdkStatusChecking: "Đang kiểm tra Pi SDK…",
     compressPanelBtnExpand: "Thu gọn panel",
     compressPanelBtnCollapse: "Mở rộng panel",
@@ -48,18 +48,18 @@ const I18N = {
     amountLabel: "Số Pi (test)",
     memoLabel: "Memo",
     metadataLabel: "Metadata (JSON)",
-    helpTitle: "Hướng dẫn sử dụng PiChordify Kingdom",
+    helpTitle: "Hướng dẫn sử dụng MusicPiChordify Kingdom",
     helpSubtitle: "Tóm tắt cách học với app · VN / EN / Dev notes",
     langToggle: "VN / EN",
     sdkBadge: "Pi SDK ready (SANDBOX)",
     playlistTitle: "Danh sách bản demo",
   },
   en: {
-    bannerTitle: "PiChordify Kingdom · Tran682025",
+    bannerTitle: "MusicPiChordify · Pichordify Kingdom",
     bannerDescription:
       "Chord suggestion & vocal practice tool in the Pi ecosystem – frontend test build on Tran682025 domain with Pi Login & Pi Payment (Testnet) to complete the Pi App Platform Checklist.",
     bannerVersionLabel: "Tran682025 · Golden Turtle Edition",
-    bannerSubline: "FYKINGDOM v1.0 · Pi SDK SANDBOX",
+    bannerSubline: "MusicPiChordify v1.0 · Pi SDK SANDBOX",
     bannerSmall: "Testnet gateway for Pi apps",
     newSongTitle: "New song (demo UI)",
     composerPill: "Composer panel",
@@ -83,10 +83,10 @@ const I18N = {
     videoRoomHint:
       "Student & teacher hangout channel (DEV placeholder).",
     devModeText:
-      "Running in DEV mode: Pi payments only work when Pi SDK (client) & backend are UP and the app is opened in Pi Browser (SANDBOX).",
+      'Running in <strong>DEV mode</strong>: Pi payments only work when Pi SDK (client) &amp; backend are UP and the app is opened in Pi Browser (SANDBOX).',
     piPanelTitle: "Pi Login & Pi Payment (Testnet)",
     piPanelSubtitle:
-      "Panel used to complete Step 10 in the Pi App Platform Checklist for the Tran682025 app.",
+      "Panel used to complete Step 10 in the Pi App Platform Checklist for the MusicPiChordify (Tran682025) app.",
     sdkStatusChecking: "Checking Pi SDK…",
     compressPanelBtnExpand: "Collapse panel",
     compressPanelBtnCollapse: "Expand panel",
@@ -96,7 +96,7 @@ const I18N = {
     amountLabel: "Pi amount (test)",
     memoLabel: "Memo",
     metadataLabel: "Metadata (JSON)",
-    helpTitle: "How to use PiChordify Kingdom",
+    helpTitle: "How to use MusicPiChordify Kingdom",
     helpSubtitle: "Quick guide · VN / EN / Dev notes",
     langToggle: "EN / VN",
     sdkBadge: "Pi SDK ready (SANDBOX)",
@@ -201,16 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const devModeTextEl = document.getElementById("devModeText");
     if (devModeTextEl && dict.devModeText) {
-      devModeTextEl.innerHTML = dict.devModeText.replace(
-        "Chế độ DEV",
-        "<strong>Chế độ DEV</strong>"
-      );
-      if (currentLang === "en") {
-        devModeTextEl.innerHTML = dict.devModeText.replace(
-          "DEV mode",
-          "<strong>DEV mode</strong>"
-        );
-      }
+      devModeTextEl.innerHTML = dict.devModeText;
     }
 
     if (langToggleBtn && dict.langToggle) {
@@ -327,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 3. Recording (đã chỉnh lại cho mượt, tránh lỗi double-rec)
+  // 3. Recording
   if (startRecBtn && stopRecBtn) {
     startRecBtn.addEventListener("click", () => startRecording(audioPlayer));
     stopRecBtn.addEventListener("click", stopRecording);
@@ -509,7 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
     el.scrollTop = el.scrollHeight;
   }
 
-  // Compress panel toggle (COMPRESSER PANEL)
+  // Compress panel toggle (pending-safe, chỉ ẩn/hiện panel)
   if (compressPanelBtn && piPanelBody) {
     compressPanelBtn.addEventListener("click", () => {
       const dict = I18N[currentLang];
@@ -527,7 +518,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // cập nhật label ban đầu theo ngôn ngữ
     const dict = I18N[currentLang];
     if (dict?.compressPanelBtnExpand) {
       compressPanelBtn.textContent = dict.compressPanelBtnExpand;
@@ -575,104 +565,80 @@ document.addEventListener("DOMContentLoaded", () => {
     if (payDevBtn) payDevBtn.disabled = true;
 
     loginLog.textContent =
-      "[Login] Đang xem bằng trình duyệt thường.\nMở app Tran682025 trong mục Develop của Pi Browser để test đăng nhập.";
+      "[Login] Đang xem bằng trình duyệt thường.\nMở app MusicPiChordify trong mục Develop của Pi Browser để test đăng nhập.";
     paymentLog.textContent =
-      "[Payment] Đang xem bằng trình duyệt thường.\nMở app Tran682025 trong mục Develop của Pi Browser để test thanh toán.";
+      "[Payment] Đang xem bằng trình duyệt thường.\nMở app MusicPiChordify trong mục Develop của Pi Browser để test thanh toán.";
   }
 
-
-// 2) TRONG index.js: THAY TOÀN BỘ HÀM runLogin BẰNG ĐOẠN NÀY
-
-async function runLogin(isDev = false) {
-  if (!piAvailable) {
-    alert("Pi SDK chưa hoạt động. Hãy mở trong Pi Browser (Develop → Tran682025).");
-    return;
-  }
-
-  const scopes = scopeInput.value
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
-
-  appendLog(
-    loginLog,
-    `[Login] Bắt đầu Pi.authenticate (mode=${
-      isDev ? "DEV" : "TESTNET"
-    }) với scope: [${scopes.join(", ")}]`
-  );
-
-  const onIncompletePaymentFound = async (payment) => {
-    appendLog(
-      loginLog,
-      "onIncompletePaymentFound (pending payment): " +
-        JSON.stringify(payment, null, 2)
-    );
-
-    try {
-      const paymentId = payment.identifier;
-
-      if (
-        paymentId &&
-        BACKEND_URL &&
-        BACKEND_URL.startsWith("http")
-      ) {
-        appendLog(
-          loginLog,
-          `Gửi yêu cầu CANCEL pending payment: id=${paymentId}`
-        );
-       await fetch(`${BACKEND_URL}/payments/complete`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ paymentId }) // chỉ paymentId, không txid
-});
-appendLog(paymentLog, "Đã ép hoàn tất pending payment.");
-
-      }
-    } catch (e) {
-      appendLog(loginLog, "Lỗi xử lý pending (cancel): " + e.message);
+  // ===== Login pending-safe =====
+  async function runLogin(isDev = false) {
+    if (!piAvailable) {
+      alert("Pi SDK chưa hoạt động. Hãy mở trong Pi Browser (Develop → MusicPiChordify).");
+      return;
     }
-  };
 
-  try {
-    const authResult = await window.Pi.authenticate(
-      scopes,
-      onIncompletePaymentFound
-    );
+    const scopes = scopeInput.value
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+
     appendLog(
       loginLog,
-      "Kết quả auth: " + JSON.stringify(authResult, null, 2)
+      `[Login] Bắt đầu Pi.authenticate (mode=${
+        isDev ? "DEV" : "TESTNET"
+      }) với scope: [${scopes.join(", ")}]`
     );
 
-    if (loginNoteInput.value.trim()) {
+    const onIncompletePaymentFound = async (payment) => {
       appendLog(
         loginLog,
-        "Ghi chú: " + loginNoteInput.value.trim()
+        "onIncompletePaymentFound (pending payment): " +
+          JSON.stringify(payment, null, 2)
       );
+      appendLog(
+        loginLog,
+        "[pending-safe] Phát hiện payment testnet còn dở. Không auto-cancel/complete. Bạn có thể xử lý thủ công trên backend / dashboard nếu cần."
+      );
+    };
+
+    try {
+      const authResult = await window.Pi.authenticate(
+        scopes,
+        onIncompletePaymentFound
+      );
+      appendLog(
+        loginLog,
+        "Kết quả auth: " + JSON.stringify(authResult, null, 2)
+      );
+
+      if (loginNoteInput.value.trim()) {
+        appendLog(
+          loginLog,
+          "Ghi chú: " + loginNoteInput.value.trim()
+        );
+      }
+    } catch (err) {
+      appendLog(loginLog, "Lỗi authenticate: " + err.message);
+      alert("Login lỗi: " + err.message);
     }
-  } catch (err) {
-    appendLog(loginLog, "Lỗi authenticate: " + err.message);
-    alert("Login lỗi: " + err.message);
   }
-}
 
-// Giữ nguyên bên dưới:
-loginBtn.addEventListener("click", () => runLogin(false));
-if (loginDevBtn) {
-  loginDevBtn.addEventListener("click", () => runLogin(true));
-}
+  loginBtn.addEventListener("click", () => runLogin(false));
+  if (loginDevBtn) {
+    loginDevBtn.addEventListener("click", () => runLogin(true));
+  }
 
-
-  // Payment
+  // ===== Payment (pending-safe, chuẩn flow approve + complete) =====
   async function runPayment(isDev = false) {
     if (!piAvailable) {
       alert(
-        "Pi SDK chưa hoạt động. Hãy mở trong Pi Browser (Develop → Tran682025)."
+        "Pi SDK chưa hoạt động. Hãy mở trong Pi Browser (Develop → MusicPiChordify)."
       );
       return;
     }
 
     const amount = parseFloat(amountInput.value) || 0;
-    const memo = memoInput.value || "Tran682025 Test Payment";
+    const memo = memoInput.value || "MusicPiChordify Test Payment";
 
     let metadata = {};
     try {
@@ -698,6 +664,7 @@ if (loginDevBtn) {
     };
 
     const cleanBackend = (BACKEND_URL || "").trim();
+    let paymentRef = null;
 
     const callbacks = {
       onReadyForServerApproval: async (paymentId) => {
@@ -716,7 +683,7 @@ if (loginDevBtn) {
           } else {
             appendLog(
               paymentLog,
-              "BACKEND_URL chưa cấu hình hoặc đang ở DEV – chỉ log ở client, không gọi server."
+              "BACKEND_URL chưa cấu hình hoặc đang ở DEV – chỉ log ở client, không gọi server approve."
             );
           }
         } catch (err) {
@@ -726,27 +693,52 @@ if (loginDevBtn) {
           );
         }
       },
-    onReadyForServerCompletion: async (paymentId, txid) => {
-  appendLog(paymentLog, "Complete request: " + paymentId);
+      onReadyForServerCompletion: async (paymentId, txid) => {
+        appendLog(
+          paymentLog,
+          "onReadyForServerCompletion: " + paymentId
+        );
 
-  try {
-    const res = await fetch(`${cleanBackend}/payments/complete`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ paymentId })   // chỉ paymentId
-    });
-    const data = await res.json();
-    appendLog(paymentLog, "Backend đã complete xong.");
+        try {
+          if (!isDev && cleanBackend && cleanBackend.startsWith("http")) {
+            const res = await fetch(`${cleanBackend}/payments/complete`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ paymentId }),
+            });
+            const data = await res.json().catch(() => null);
+            appendLog(
+              paymentLog,
+              "Backend đã complete xong (response: " +
+                JSON.stringify(data) +
+                ")"
+            );
+          } else {
+            appendLog(
+              paymentLog,
+              "BACKEND_URL chưa cấu hình hoặc đang ở DEV – giả lập complete ở client."
+            );
+          }
 
-    // ⭐ RẤT QUAN TRỌNG: báo cho Pi SDK biết là hoàn tất
-    payment.onReadyForCompletion(paymentId, txid);
-
-  } catch (err) {
-    appendLog(paymentLog, "Lỗi fetch complete: " + err.message);
-  }
-},
-
-
+          if (paymentRef && typeof paymentRef.onReadyForCompletion === "function") {
+            await paymentRef.onReadyForCompletion(paymentId, txid);
+            appendLog(
+              paymentLog,
+              "Đã gọi payment.onReadyForCompletion → Pi side complete."
+            );
+          } else {
+            appendLog(
+              paymentLog,
+              "Không tìm thấy paymentRef.onReadyForCompletion – kiểm tra Pi SDK v2."
+            );
+          }
+        } catch (err) {
+          appendLog(
+            paymentLog,
+            "Lỗi fetch complete: " + err.message
+          );
+        }
+      },
       onCancel: (paymentId) => {
         appendLog(
           paymentLog,
@@ -765,14 +757,14 @@ if (loginDevBtn) {
     };
 
     try {
-      const payment = await window.Pi.createPayment(
+      paymentRef = await window.Pi.createPayment(
         paymentData,
         callbacks
       );
       appendLog(
         paymentLog,
         "createPayment() trả về: " +
-          JSON.stringify(payment, null, 2)
+          JSON.stringify(paymentRef, null, 2)
       );
     } catch (err) {
       appendLog(
